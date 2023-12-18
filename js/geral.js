@@ -1,16 +1,28 @@
 let url = "https://saurav.tech/NewsAPI/top-headlines/category/technology/in.json";
+let searchInput = document.querySelector(".data-search");
+let noticias = [];
+
+searchInput.addEventListener("input", e =>{
+    const value = e.target.value.toLowerCase();
+    //console.log(noticias);
+    noticias.forEach(articles =>{
+        //let isVisible = articles.title.toLowerCase().includes(value);
+        let isVisible = articles.title.toLowerCase().startsWith(value);
+        articles.element.classList.toggle("hide", !isVisible);
+    })
+})
 
 fetch(url).then(function (resposta) {
     return resposta.json();
 }).then(function (articles) {
-    console.log(articles);
+    //console.log(articles);
     addArticle(articles);
 });
 
 function addArticle(json) {
     let box = document.querySelector(".noticias");
     box.innerHTML=""; //limpar o conteudo
-    json.articles.forEach(function (articles) {
+    noticias = json.articles.map(function (articles) {
         let card = document.createElement("div");
         card.classList.add("card");
         box.appendChild(card);
@@ -35,6 +47,7 @@ function addArticle(json) {
         img.setAttribute("src", articles.urlToImage);
         card.appendChild(img);
 
-        return card;
+        //return card;
+        return { title: articles.title, element: card }; // Armazenar informações relevantes para a pesquisa
     });
 }
