@@ -1,15 +1,17 @@
 let url = "https://gutendex.com/books/";
 let searchInput = document.querySelector(".data-search");
 let books = [];
-let asc = document.getElementById("asc");
 let desc = document.getElementById("desc");
-const SORT_YEAR_ASC = function(a, b) {
+//let nxt = document.getElementById("next");
+/*const SORT_YEAR_ASC = function(a, b) {
     return a.download_count - b.download_count;
 };
 
 const SORT_YEAR_DESC = function(a, b) {
     return b.download_count - a.download_count;
-};
+};*/
+let  isDescOrder = false;
+
 
 searchInput.addEventListener("input", e =>{
     const value = e.target.value.toLowerCase();
@@ -21,20 +23,13 @@ searchInput.addEventListener("input", e =>{
     })
 })
 
-asc.addEventListener("click", function(){
-    // Ordenar os livros com base na contagem de downloads
-    books.sort(SORT_YEAR_ASC);
-    
-    let box = document.querySelector(".books");
-    box.innerHTML = "";
-    books.forEach(results => {
-        box.appendChild(results.element);
-    });
-});
-
 desc.addEventListener("click", function(){
     // Ordenar os livros com base na contagem de downloads
-    books.sort(SORT_YEAR_DESC);
+    isDescOrder = !isDescOrder;
+
+    // Ordenar os livros com base na nova direção
+    books.sort((a, b) => (isDescOrder ? a.download_count - b.download_count : b.download_count - a.download_count));
+
     
     let box = document.querySelector(".books");
     box.innerHTML = "";
@@ -49,6 +44,10 @@ fetch(url).then(function (resposta) {
     console.log(results); 
     addResult(results);
 });
+
+/*nxt.addEventListener("click", function(){
+    url = next;
+})*/
 
 
 function addResult(json) {
@@ -82,4 +81,3 @@ function addResult(json) {
         return book;
     });
 }
-
