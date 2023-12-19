@@ -3,6 +3,7 @@ let searchInput = document.querySelector(".data-search");
 let books = [];
 let desc = document.getElementById("desc");
 //let nxt = document.getElementById("next");
+
 /*const SORT_YEAR_ASC = function(a, b) {
     return a.download_count - b.download_count;
 };
@@ -29,26 +30,25 @@ desc.addEventListener("click", function(){
 
     // Ordenar os livros com base na nova direção
     books.sort((a, b) => (isDescOrder ? a.download_count - b.download_count : b.download_count - a.download_count));
-
     
     let box = document.querySelector(".books");
     box.innerHTML = "";
     books.forEach(results => {
         box.appendChild(results.element);
     });
+
 });
 
-fetch(url).then(function (resposta) {
-    return resposta.json();
-}).then(function (results) {
-    console.log(results); 
-    addResult(results);
+
+// Chamar a função para carregar os resultados no carregamento da página
+window.addEventListener("load", function() {
+    fetch(url).then(function (resposta) {
+        return resposta.json();
+    }).then(function (results) {
+        console.log(results); 
+        addResult(results);
+    });
 });
-
-/*nxt.addEventListener("click", function(){
-    url = next;
-})*/
-
 
 function addResult(json) {
     let box = document.querySelector(".books");
@@ -76,8 +76,9 @@ function addResult(json) {
         img.setAttribute("src", results.formats["image/jpeg"]);
         card.appendChild(img);
 
-        //return card;
+        //return book;
         let book = { title: results.title, element: card, download_count: results.download_count };
         return book;
     });
+
 }
