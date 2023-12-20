@@ -19,7 +19,23 @@
         <label for="search">Search Books</label>
         <input type="search" id="search" class="data-search">
     </div>
-    <div class="categorias"></div>
+    <div class="categorias">
+        <button class="btn active" onclick="filterSelection('all')"> Show all</button>
+        <button class="btn" onclick="filterSelection('fiction')"> Fiction</button>
+        <button class="btn" onclick="filterSelection('drama')"> Drama</button>
+        <button class="btn" onclick="filterSelection('tragedies')"> Tragedy</button>
+        <button class="btn" onclick="filterSelection('adventure')"> Adventure</button>
+    </div>
+
+
+<!-- <div class="filterDiv adventure">Adventure Stories</div>
+        <div class="filterDiv christmas">Christmas Stories</div>
+        <div class="filterDiv science">Science</div>
+        <div class="filterDiv humorous">Humorous</div>
+        <div class="filterDiv children">Children's Stories</div>
+        <div class="filterDiv history">Historical Fiction</div>
+        <div class="filterDiv love">Love Stories</div>-->
+    
     <div class="books"></div>
     <!--<div class="noticias"></div>-->
     <!--<button id="next">Next</button>-->
