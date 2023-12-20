@@ -15,6 +15,7 @@ searchInput.addEventListener("input", e =>{
     })
 })
 
+/* código baseado em https://www.w3schools.com/howto/howto_js_filter_elements.asp */
 function filterSelection(category) {
     books.forEach(book => {
         console.log(book.filter);
