@@ -62,8 +62,14 @@ function addResult(json) {
         card.classList.add("card");
         box.appendChild(card);
 
+
+        let img = document.createElement("img");
+        img.setAttribute("src", results.formats["image/jpeg"]);
+        card.appendChild(img);
+
         let h3 = document.createElement("h3");
         h3.innerText = results.title;
+        //h3.classList.add("overflow");
         card.appendChild(h3);
 
         let autor = document.createElement("h5");
@@ -75,9 +81,7 @@ function addResult(json) {
         card.appendChild(d_count);
 
 
-        let img = document.createElement("img");
-        img.setAttribute("src", results.formats["image/jpeg"]);
-        card.appendChild(img);
+        
 
         //return book;
         let book = { title: results.title, element: card, download_count: results.download_count, filter: results.subjects };
