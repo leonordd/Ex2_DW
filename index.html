@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>eBook Repository</title>
+    <link rel="shortcut icon" type="img/png" href="data/book.png">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/flexbox_grid.css" rel="stylesheet">
+    <link href="css/geral.css" rel="stylesheet">
+
+    <!--link fontes-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="wrap container-fluid">
+    <div class="row row2">
+        <h1>eBook Repository</h1>
+    </div>
+    <div class="row row2">    
+        <div id="search-wrapper">
+            <label for="search">Search Books</label>
+            <input type="search" id="search" class="data-search" placeholder="by name">
+        </div>
+        <!--<div id="order">
+            <label for="desc">Order by</label>
+            <button id="desc">Least Downloaded</button>
+        </div>-->
+
+        <div id="order">
+            <label for="desc">Order by</label>
+            <select name="paraquem" id="desc" onchange="runFunction()">
+                <option selected value="most">Most Downloaded</option>
+                <option value="least">Least Downloaded</option>
+            </select>
+        </div>
+    </div>
+    <div class="row categorias">
+        <button class="btn active" onclick="filterSelection('all')"> Show all</button>
+        <button class="btn" onclick="filterSelection('fiction')"> Fiction</button>
+        <button class="btn" onclick="filterSelection('drama')"> Drama</button>
+        <button class="btn" onclick="filterSelection('tragedies')"> Tragedy</button>
+        <button class="btn" onclick="filterSelection('adventure')"> Adventure</button>
+        <button class="btn" onclick="filterSelection('children')"> Children's Literature</button>
+        <button class="btn" onclick="filterSelection('christmas')"> Christmas</button>
+        <button class="btn" onclick="filterSelection('political')"> Political</button>
+    </div>
+    <div class="books row">
+        <!--<div class="col-m-6 col-t-4 col-d-2">
+            <div class="box-row card"> 
+                <h3>nome do livro</h3>
+                <h5>nome do autor</h5>
+                <img src="capa livro">
+                <div>nº dowloads</div>
+            </div>
+        </div>-->
+    </div>
+</div>
+    <!--<button id="next">Next</button>-->
+    <script src="js/geral copy.js" defer></script>
+</body>
+</html>
