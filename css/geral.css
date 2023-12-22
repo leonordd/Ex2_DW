@@ -4,29 +4,45 @@
     box-sizing: border-box;
 
     /*COLORS*/
+    --cor1: #642E68;
+    --cor2: #9F295D;
+    --cor3: #F3E4EC;
+    --cor4: #5775ad;
+    --branco: #FFFFFF;
+    --branco_sujo: whitesmoke;
+    --preto: #000000;
 
     /*text*/
     text-decoration:none;
-    --titulos:3rem;
-    color: var(--branco);
+    color: var(--preto);
+    font-family: 'Lato', sans-serif;
+
 }
+html{
+    background-color:var(--branco_sujo);
+}
+
 body{
     width:100%;
 }
 
-.books{
+/*.books{
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     grid-column-gap: 2%;
-    /*grid-template-rows: repeat(6,1fr);*/
+    /*grid-template-rows: repeat(6,1fr);
     grid-row-gap: 2%;
     margin: 2%;
-}
+}*/
 
 
 .card{
+    background-color:var(--branco);
+    width:100%;
     border-radius:5px;
     box-shadow: 0px 0px 10px 0px rgba(1, 3, 20, 0.05);
+    padding:20px;
+    float:left;
 }
 
 .hide{
@@ -34,27 +50,114 @@ body{
 }
 
 img{
-    
     width:100%;
-    max-height:200px;
-    object-fit:cover;
+    height:250px;
+    object-fit: cover;
+    object-position:top;
 }
 
+h1{
+    font-weight:700;
+    font-size:5.5rem;
+    color: var(--cor1);
+}
 
 h3{
-    padding:14px;
-    height:2.8rem;
-    max-width:150px;
+    width: 100%;
+    white-space: normal; /* Permitir quebras de linha */
     overflow: hidden;
-    text-wrap: nowrap;
-    text-overflow:ellipsis;
-    margin-bottom:10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Número de linhas a serem exibidas */
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    height:2.8rem;
+    margin-bottom:8px;
 }
 
 .btn{
     border: none;
     outline: none;
-    padding: 12px 16px;
-    background-color: #f1f1f1;
+    padding: 12px 24px;
+    background-color: var(--cor3);
     cursor: pointer;
+    margin:5px;
+    border-radius:100px;
+    color:#642E68;
+    font-weight:600;
+}
+
+.btn.active {
+    background-color: var(--cor4);
+    color: var(--branco);
+}
+
+.categorias{
+    margin-bottom:80px;
+}
+
+.books{
+    margin-top:20px;
+}
+
+.row2{
+    margin-bottom:32px;
+    justify-content:space-between;
+}
+
+/*#order{
+   position:absolute;
+   right:0;
+}*/
+
+#search, #desc{
+    display:block;
+}
+
+#search-wrapper, #order, h1{
+    align-self: center;
+}
+
+
+
+#search-wrapper {
+    width:30%;
+    margin-left:5px;
+    margin-right:5px;
+}
+
+#search-wrapper label {
+    margin-bottom:40px;
+    font-size:1.5rem;
+}
+
+#search-wrapper input {
+    margin-top:5px;
+    padding: 10px;
+    width:100%;
+    border: 1px solid var(--cor3); 
+    border-radius: 5px; 
+    outline: none; 
+    transition: border-color 0.3s ease; 
+}
+
+#search-wrapper input:focus {
+    border-color: var(--cor4);
+}
+
+#search-wrapper input::placeholder {
+    color: #ccc; 
+}
+
+/* Para tablets: */
+@media screen and (min-width: 600px) and (max-width: 980px) {
+    #search-wrapper {
+        width:80%;
+    }
+}
+
+/*para telemóveis*/
+@media screen and (max-width: 600px) {
+    #search-wrapper {
+        width:100%;
+    }
 }

@@ -4,15 +4,22 @@ let books = [];
 let desc = document.getElementById("desc");
 //let nxt = document.getElementById("next");
 let  isDescOrder = false;
-
+var btnContainer = document.querySelector(".categorias");
+var btns = btnContainer.getElementsByClassName("btn");
 
 searchInput.addEventListener("input", e =>{
     const value = e.target.value.toLowerCase();
     //console.log(books);
     books.forEach(results =>{
         let isVisible = results.title.toLowerCase().startsWith(value);
-        results.element.classList.toggle("hide", !isVisible);
+        results.element.parentNode.classList.toggle("hide", !isVisible); //parent Node pq é o pai do elemento
     })
+
+    for (var i = 0; i < btns.length; i++) {
+          btns[i].classList.remove("active");
+          btns[0].classList.add("active");
+    }
+    
 })
 
 /* código baseado em https://www.w3schools.com/howto/howto_js_filter_elements.asp */
@@ -22,10 +29,18 @@ function filterSelection(category) {
 
         // Verifica se a categoria está presente em algum dos elementos do array
         let isVisible = category === 'all' || book.filter.some(element => element.toLowerCase().includes(category));
-        book.element.classList.toggle("hide", !isVisible);
+        book.element.parentNode.classList.toggle("hide", !isVisible);
         console.log(isVisible);
     });
 }
+
+for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener("click", function() {
+      var current = document.getElementsByClassName("active");
+      current[0].className = current[0].className.replace(" active", "");
+      this.className += " active";
+    });
+  }
 
 desc.addEventListener("click", function(){
     // Ordenar os livros com base na contagem de downloads
@@ -37,8 +52,14 @@ desc.addEventListener("click", function(){
     let box = document.querySelector(".books");
     box.innerHTML = "";
     books.forEach(results => {
-        box.appendChild(results.element);
+        box.appendChild(results.element.parentNode);
     });
+
+    if(isDescOrder){
+        desc.innerText="Most Downloaded"
+    }else{
+        desc.innerText="Least Downloaded"
+    }
 });
 
 
@@ -58,14 +79,17 @@ function addResult(json) {
 
     box.innerHTML=""; //limpar o conteudo
     books = json.results.map(function (results) {
+
+        let cols = document.createElement("div");
+        cols.classList.add("col-m-3");
+        cols.classList.add("col-t-4");
+        cols.classList.add("col-d-2");
+        box.appendChild(cols);
+
         let card = document.createElement("div");
         card.classList.add("card");
-        box.appendChild(card);
-
-
-        let img = document.createElement("img");
-        img.setAttribute("src", results.formats["image/jpeg"]);
-        card.appendChild(img);
+        card.classList.add("box-row");
+        cols.appendChild(card);
 
         let h3 = document.createElement("h3");
         h3.innerText = results.title;
@@ -76,12 +100,13 @@ function addResult(json) {
         autor.innerText = results.authors.length > 0 ? results.authors[0].name : "Unknown Author";
         card.appendChild(autor);
 
+        let img = document.createElement("img");
+        img.setAttribute("src", results.formats["image/jpeg"]);
+        card.appendChild(img);
+
         let d_count = document.createElement("div");
         d_count.innerText = results.download_count;
         card.appendChild(d_count);
-
-
-        
 
         //return book;
         let book = { title: results.title, element: card, download_count: results.download_count, filter: results.subjects };
