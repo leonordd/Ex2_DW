@@ -137,6 +137,7 @@ function addResult(json) {
     books = json.results.map(function (results) {
 
         let cols = document.createElement("div");
+        cols.classList.add("col-xm-6");
         cols.classList.add("col-m-3");
         cols.classList.add("col-t-4");
         cols.classList.add("col-d-2");
