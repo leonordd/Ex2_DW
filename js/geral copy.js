@@ -4,34 +4,90 @@ let books = [];
 let desc = document.getElementById("desc");
 //let nxt = document.getElementById("next");
 let  isDescOrder = false;
-var btnContainer = document.querySelector(".categorias");
-var btns = btnContainer.getElementsByClassName("btn");
+let btnContainer = document.querySelector(".categorias");
+let btns = btnContainer.getElementsByClassName("btn");
+let currentCategory = "all";
 
 searchInput.addEventListener("input", e =>{
     const value = e.target.value.toLowerCase();
+    // Se houver texto na barra de pesquisa
+    if (value.trim() !== "") {
+        books.forEach((results) => {
+            let isVisible =
+                (currentCategory === 'all' || results.filter.some((element) => element.toLowerCase().includes(currentCategory))) &&
+                results.title.toLowerCase().startsWith(value);
+            results.element.parentNode.classList.toggle("hide", !isVisible);
+        });
+    } else {
+        // Se a barra de pesquisa estiver vazia, restaurar a visibilidade dos livros na categoria selecionada
+        filterSelection(currentCategory);
+    }
+
+    // Remover a classe 'active' de todos os botões de categoria
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].classList.remove("active");
+        // Adicionar a classe 'active' apenas à categoria atual
+        if (currentCategory === btns[i].getAttribute("onclick").split("'")[1]) {
+            btns[i].classList.add("active");
+        }
+    }
+
+    /*let value = e.target.value.toLowerCase();
+    console.log(books);
+
     //console.log(books);
     books.forEach(results =>{
         let isVisible = results.title.toLowerCase().startsWith(value);
         results.element.parentNode.classList.toggle("hide", !isVisible); //parent Node pq é o pai do elemento
     })
 
-    for (var i = 0; i < btns.length; i++) {
+    for (let i = 0; i < btns.length; i++) {
           btns[i].classList.remove("active");
           btns[0].classList.add("active");
-    }
+    }*/
     
 })
 
 /* código baseado em https://www.w3schools.com/howto/howto_js_filter_elements.asp */
 function filterSelection(category) {
-    books.forEach(book => {
+    // Atualiza a categoria atual
+    currentCategory = category;
+
+    books.forEach((book) => {
+        console.log(book.filter);
+        // Verifica se a categoria está presente em algum dos elementos do array
+        let isVisible = category === 'all' || book.filter.some(element => element.toLowerCase().includes(category));
+        book.element.parentNode.classList.toggle("hide", !isVisible);
+        console.log(isVisible);
+    });
+
+    /*books.forEach(book => {
         console.log(book.filter);
 
         // Verifica se a categoria está presente em algum dos elementos do array
         let isVisible = category === 'all' || book.filter.some(element => element.toLowerCase().includes(category));
         book.element.parentNode.classList.toggle("hide", !isVisible);
         console.log(isVisible);
+    });*/
+}
+
+function runFunction(){
+    isDescOrder = !isDescOrder;
+
+    // Ordenar os livros com base na nova direção
+    books.sort((a, b) => (isDescOrder ? a.download_count - b.download_count : b.download_count - a.download_count));
+    
+    let box = document.querySelector(".books");
+    box.innerHTML = "";
+    books.forEach(results => {
+        box.appendChild(results.element.parentNode);
     });
+
+    /*if(isDescOrder){
+        desc.innerText="Most Downloaded"
+    }else{
+        desc.innerText="Least Downloaded"
+    }*/
 }
 
 for (var i = 0; i < btns.length; i++) {
@@ -42,7 +98,7 @@ for (var i = 0; i < btns.length; i++) {
     });
   }
 
-desc.addEventListener("click", function(){
+/*desc.addEventListener("click", function(){
     // Ordenar os livros com base na contagem de downloads
     isDescOrder = !isDescOrder;
 
@@ -60,7 +116,7 @@ desc.addEventListener("click", function(){
     }else{
         desc.innerText="Least Downloaded"
     }
-});
+});*/
 
 
 // Chamar a função para carregar os resultados no carregamento da página
@@ -104,9 +160,17 @@ function addResult(json) {
         img.setAttribute("src", results.formats["image/jpeg"]);
         card.appendChild(img);
 
+        let download = document.createElement("div");
+        download.classList.add("download");
+        card.appendChild(download);
+
         let d_count = document.createElement("div");
         d_count.innerText = results.download_count;
-        card.appendChild(d_count);
+        download.appendChild(d_count);
+
+        let d_img = document.createElement("img");
+        d_img.src = "../data/dowload.svg"
+        download.appendChild(d_img);
 
         //return book;
         let book = { title: results.title, element: card, download_count: results.download_count, filter: results.subjects };
@@ -115,4 +179,3 @@ function addResult(json) {
 
     });
 }
-
