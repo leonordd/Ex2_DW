@@ -105,7 +105,6 @@ h5{
 .row2{
     margin-bottom:32px;
     justify-content: center;
-    /*justify-content:space-between;*/
 }
 
 #order{
@@ -215,7 +214,7 @@ select{
     }
 }
 
-/*para mini teles*/
+/*para mini telemoveis*/
 @media screen and (max-width: 375px) {
     #search-wrapper {
         width:100%;
