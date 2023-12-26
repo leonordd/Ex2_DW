@@ -60,6 +60,7 @@ h1{
     font-weight:700;
     font-size:5.5rem;
     color: var(--cor1);
+    text-align: center;
 }
 
 h3{
@@ -104,6 +105,7 @@ h5{
 
 .categorias{
     margin-bottom:80px;
+    justify-content: center;
 }
 
 .books{
@@ -112,6 +114,7 @@ h5{
 
 .row2{
     margin-bottom:32px;
+    justify-content: center;
     /*justify-content:space-between;*/
 }
 
@@ -207,7 +210,7 @@ select{
 }
 
 /*para telemóveis*/
-@media screen and (max-width: 600px) {
+@media screen and (min-width: 375px) and (max-width: 600px) {
     #search-wrapper {
         width:100%;
     }
@@ -215,5 +218,25 @@ select{
     #order{
         margin-left: 5px;
         margin-top:30px;
+    }
+
+    h1{
+        font-size:3.0rem;
+    }
+}
+
+/*para mini teles*/
+@media screen and (max-width: 375px) {
+    #search-wrapper {
+        width:100%;
+    }
+
+    #order{
+        margin-left: 5px;
+        margin-top:30px;
+    }
+
+    h1{
+        font-size:3.0rem;
     }
 }

@@ -203,7 +203,7 @@ div {
 
 
 /*para telemóveis*/
-@media screen and (max-width: 600px) {
+@media screen and (min-width:375px) and (max-width: 600px) {
     [class*='col'] {
         box-sizing: border-box;
         padding-right: calc(4.62%/2);
@@ -241,6 +241,50 @@ div {
     }
 
     .col-m-6 {
+        flex-basis: 100%;
+        max-width: 100%;
+    }
+}
+
+/*para mini teles*/
+@media screen and (max-width: 375px) {
+    [class*='col'] {
+        box-sizing: border-box;
+        padding-right: calc(4.62%/2);
+        padding-left: calc(4.62%/2);
+    }
+
+    .col-xm-1 {
+        -ms-flex-preferred-size: calc((100%/6)*1);
+        flex-basis: calc((100%/6)*1);
+        max-width: calc((100%/6)*1);
+    }
+
+    .col-xm-2 {
+        -ms-flex-preferred-size: calc((100%/6)*2);
+        flex-basis: calc((100%/6)*2);
+        max-width: calc((100%/6)*2);
+    }
+
+    .col-xm-3 {
+        -ms-flex-preferred-size: calc((100%/6)*3);
+        flex-basis: calc((100%/6)*3);
+        max-width: calc((100%/6)*3);
+    }
+
+    .col-xm-4 {
+        -ms-flex-preferred-size: calc((100%/6)*4);
+        flex-basis: calc((100%/6)*4);
+        max-width: calc((100%/6)*4);
+    }
+
+    .col-xm-5 {
+        -ms-flex-preferred-size: calc((100%/6)*5);
+        flex-basis: calc((100%/6)*5);
+        max-width: calc((100%/6)*5);
+    }
+
+    .col-xm-6 {
         flex-basis: 100%;
         max-width: 100%;
     }
