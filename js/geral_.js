@@ -138,7 +138,7 @@ function addResult(json) {
         download.appendChild(d_count);
 
         let d_img = document.createElement("img");
-        d_img.src = "../data/dowload.svg"
+        d_img.src = "../data/download.svg"
         download.appendChild(d_img);
 
         let book = { title: results.title, element: card, download_count: results.download_count, filter: results.subjects };
