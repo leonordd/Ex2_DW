@@ -2,125 +2,93 @@ let url = "https://gutendex.com/books/";
 let searchInput = document.querySelector(".data-search");
 let books = [];
 let desc = document.getElementById("desc");
-//let nxt = document.getElementById("next");
-let  isDescOrder = false;
+let isDescOrder = false;
 let btnContainer = document.querySelector(".categorias");
 let btns = btnContainer.getElementsByClassName("btn");
 let currentCategory = "all";
 
-searchInput.addEventListener("input", e =>{
+searchInput.addEventListener("input", e => {
     const value = e.target.value.toLowerCase();
-    // Se houver texto na barra de pesquisa
+
+    //função trim garante que não se contam os "espaços em branco"
+    //Se houver texto na barra de pesquisa
     if (value.trim() !== "") {
         books.forEach((results) => {
-            let isVisible =
-                (currentCategory === 'all' || results.filter.some((element) => element.toLowerCase().includes(currentCategory))) &&
-                results.title.toLowerCase().startsWith(value);
+            // Verifica se a categoria está presente em algum dos elementos do array
+            let isVisible = (currentCategory === 'all' || results.filter.some((element) => element.toLowerCase().includes(currentCategory))) && results.title.toLowerCase().startsWith(value);
             results.element.parentNode.classList.toggle("hide", !isVisible);
         });
-    } else {
-        // Se a barra de pesquisa estiver vazia, restaurar a visibilidade dos livros na categoria selecionada
-        filterSelection(currentCategory);
+    } else {  //Se a barra de pesquisa estiver vazia
+        filterSelection(currentCategory);  //os livros da categoria selecionada voltam a estar todos ativos
     }
 
-    // Remover a classe 'active' de todos os botões de categoria
     for (var i = 0; i < btns.length; i++) {
-        btns[i].classList.remove("active");
-        // Adicionar a classe 'active' apenas à categoria atual
+        btns[i].classList.remove("active"); // Remove a classe "active" de todos os botões
+        // Adiciona a classe "active" à categoria atual
         if (currentCategory === btns[i].getAttribute("onclick").split("'")[1]) {
             btns[i].classList.add("active");
         }
     }
-
-    /*let value = e.target.value.toLowerCase();
-    console.log(books);
-
-    //console.log(books);
-    books.forEach(results =>{
-        let isVisible = results.title.toLowerCase().startsWith(value);
-        results.element.parentNode.classList.toggle("hide", !isVisible); //parent Node pq é o pai do elemento
-    })
-
-    for (let i = 0; i < btns.length; i++) {
-          btns[i].classList.remove("active");
-          btns[0].classList.add("active");
-    }*/
-    
 })
 
 /* código baseado em https://www.w3schools.com/howto/howto_js_filter_elements.asp */
 function filterSelection(category) {
     // Atualiza a categoria atual
     currentCategory = category;
-
     books.forEach((book) => {
-        console.log(book.filter);
+        //console.log(book.filter);
         // Verifica se a categoria está presente em algum dos elementos do array
         let isVisible = category === 'all' || book.filter.some(element => element.toLowerCase().includes(category));
         book.element.parentNode.classList.toggle("hide", !isVisible);
-        console.log(isVisible);
+        //console.log(isVisible);
     });
-
-    /*books.forEach(book => {
-        console.log(book.filter);
-
-        // Verifica se a categoria está presente em algum dos elementos do array
-        let isVisible = category === 'all' || book.filter.some(element => element.toLowerCase().includes(category));
-        book.element.parentNode.classList.toggle("hide", !isVisible);
-        console.log(isVisible);
-    });*/
 }
 
-function runFunction(){
+function runFunction() {
     isDescOrder = !isDescOrder;
-
     // Ordenar os livros com base na nova direção
-    books.sort((a, b) => (isDescOrder ? a.download_count - b.download_count : b.download_count - a.download_count));
-    
+    //faz o mesmo que a "const SORT_ALPHA_TITLE" do exemplo que o professor forneceu na aula (adaptado)
+    //https://codepen.io/bee-arcade/pen/xdYLpP/1169a5760153ee5f6877a8b6f7c30521
+    //verifica se a função está ordenada de forma crescente e descrescente e retorna o valor -1, 1,0
+    books.sort(function(a, b) {
+        if (isDescOrder) {
+          if (a.download_count > b.download_count) {
+            return 1;
+          } else if (a.download_count < b.download_count) {
+            return -1;
+          } else {
+            return 0;
+          }
+        } else {
+          if (a.download_count < b.download_count) {
+            return 1;
+          } else if (a.download_count > b.download_count) {
+            return -1;
+          } else {
+            return 0;
+          }
+        }
+    });
+
     let box = document.querySelector(".books");
     box.innerHTML = "";
     books.forEach(results => {
         box.appendChild(results.element.parentNode);
     });
-
-    /*if(isDescOrder){
-        desc.innerText="Most Downloaded"
-    }else{
-        desc.innerText="Least Downloaded"
-    }*/
 }
 
+//percorre o array de todos os botões de categoria
 for (var i = 0; i < btns.length; i++) {
-    btns[i].addEventListener("click", function() {
-      var current = document.getElementsByClassName("active");
-      current[0].className = current[0].className.replace(" active", "");
-      this.className += " active";
+    //ao clicar um botão, altera a classe do botão que anteriormente estava ativo para "" e coloca active no btn que foi clicado
+    btns[i].addEventListener("click", function () {
+        var current = document.getElementsByClassName("active");
+        current[0].className = current[0].className.replace(" active", "");
+        this.className += " active";
     });
-  }
-
-/*desc.addEventListener("click", function(){
-    // Ordenar os livros com base na contagem de downloads
-    isDescOrder = !isDescOrder;
-
-    // Ordenar os livros com base na nova direção
-    books.sort((a, b) => (isDescOrder ? a.download_count - b.download_count : b.download_count - a.download_count));
-    
-    let box = document.querySelector(".books");
-    box.innerHTML = "";
-    books.forEach(results => {
-        box.appendChild(results.element.parentNode);
-    });
-
-    if(isDescOrder){
-        desc.innerText="Most Downloaded"
-    }else{
-        desc.innerText="Least Downloaded"
-    }
-});*/
-
+}
 
 // Chamar a função para carregar os resultados no carregamento da página
-window.addEventListener("load", function() {
+window.addEventListener("load", function () {
     fetch(url).then(function (resposta) {
         return resposta.json();
     }).then(function (results) {
@@ -130,10 +98,11 @@ window.addEventListener("load", function() {
     });
 });
 
+//função que cria cada um dos elementos "book"
 function addResult(json) {
     let box = document.querySelector(".books");
 
-    box.innerHTML=""; //limpar o conteudo
+    box.innerHTML = ""; //limpar o conteudo
     books = json.results.map(function (results) {
 
         let cols = document.createElement("div");
@@ -150,7 +119,6 @@ function addResult(json) {
 
         let h3 = document.createElement("h3");
         h3.innerText = results.title;
-        //h3.classList.add("overflow");
         card.appendChild(h3);
 
         let autor = document.createElement("h5");
@@ -173,9 +141,7 @@ function addResult(json) {
         d_img.src = "../data/dowload.svg"
         download.appendChild(d_img);
 
-        //return book;
         let book = { title: results.title, element: card, download_count: results.download_count, filter: results.subjects };
-        //console.log(book.filter);
         return book;
 
     });
